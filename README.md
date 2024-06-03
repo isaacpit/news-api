@@ -1,10 +1,15 @@
-# News API 
+# News API
 
-This API is a news API client which is a wrapper on top of existing News APIs. The external news client used was [News API](https://newsapi.org/docs). There are two main endpoints defined: 
-1. An API to search news articles via keyword/author in article's descriptions, titles, and contents -  `GET /news/api/search` API
-2. An API to return top headlines with support for keyword search as well as paging (if the client supports it. e.g. GNews API does not support paging with the free tier) - `GET /news/api/top-headlines` API
+This API is a news API client which is a wrapper on top of existing News APIs. The external news client used
+was [News API](https://newsapi.org/docs). There are two main endpoints defined:
+
+1. An API to search news articles via keyword/author in article's descriptions, titles, and
+   contents -  `GET /news/api/search` API
+2. An API to return top headlines with support for keyword search as well as paging (if the client supports it. e.g.
+   GNews API does not support paging with the free tier) - `GET /news/api/top-headlines` API
 
 ## `GET /news/api/search` API
+
 | parameter name | parameter type | required       | description                                                                                                                       | allowed values                                                                                                                                                                                               | default                                     |  
 |----------------|----------------|----------------|-----------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------|
 | `query`        | string         | **_False_** ** | query on keyword(s)                                                                                                               | any string                                                                                                                                                                                                   | n/a                                         |                         
@@ -12,7 +17,8 @@ This API is a news API client which is a wrapper on top of existing News APIs. T
 | `searchIn`     | string         | False          | restrict what parts of articles the keyword/authors are searched against                                                          | `title`, `description`, `content` comma separated for multiple values e.g. `title,description,content` <br/><br/>note: same ones supported by the external news client, these values are just passed through | `null` (News API default is "title,content" |
 | `client`       | string         | False          | parameter to select which News Client to use                                                                                      | `gnews`, `news`, `mock`                                                                                                                                                                                      | `news`                                      |
 
-### Legend 
+### Legend
+
 | Legend | description                                                                                                                               |
 |--------|-------------------------------------------------------------------------------------------------------------------------------------------|
 | **     | `query` or `author` parameters are mandatory, both can also be used and are separated by an "OR" keyword when sent to the external client |
@@ -27,11 +33,13 @@ This API is a news API client which is a wrapper on top of existing News APIs. T
 | `client`       | string         | False    | parameter to select which News Client to use                                                                       | `gnews`, `news`, `mock` | `news`                                       |
 
 ## News API & GNews API support
-I also put support for [GNews API](https://gnews.io/docs/v4#introduction) feel free to just ignore the GNews client implementation, it's only used if explicitly requested via the `client=gnews` query param
 
+I also put support for [GNews API](https://gnews.io/docs/v4#introduction) feel free to just ignore the GNews client
+implementation, it's only used if explicitly requested via the `client=gnews` query param
 
 ### Request Translations
-* This table shows the translations or equivalents between my news API, News API .org and GNews API  
+
+* This table shows the translations or equivalents between my news API, News API .org and GNews API
 
 | My News API field | News API.org field | GNews API field | Description                |
 |-------------------|--------------------|-----------------|----------------------------|
@@ -42,42 +50,59 @@ I also put support for [GNews API](https://gnews.io/docs/v4#introduction) feel f
 | page              | page               | page            | page number                |
 
 # How to run server:
-* The application runs using Spring Boot's NettyWebServer running on default `port 8080` 
+
+* The application runs using Spring Boot's NettyWebServer running on default `port 8080`
 
 ### Requirements:
+
 To run this project you need the following:
+
 1. Java 21
 
 ### Server local run option #1: [exec-maven-plugin](https://www.mojohaus.org/exec-maven-plugin/usage.html)
+
 * Populate the API keys in the following environment variables
-  * News API key environment variable name = `NEWS_API_KEY`
-  * GNews API key environment variable name = `GNEWS_API_KEY`
+    * News API key environment variable name = `NEWS_API_KEY`
+    * GNews API key environment variable name = `GNEWS_API_KEY`
 
 1. Option #1A - Run with environment variables set via `export`
+
 ```shell
 export NEWS_API_KEY="***"
 export GNEWS_API_KEY="***"
 ./mvnw compile exec:java -Dexec.mainClass="com.isaacpit.news.api.NewsApiApplication"  
 ```
+
 2. Option #1B - Run with environment variables set in-line
+
 ```shell
 NEWS_API_KEY="***" GNEWS_API_KEY="***" ./mvnw exec:java -Dexec.mainClass="com.isaacpit.news.api.NewsApiApplication"  
 ```
-* The service will still start without the environment variables set but you will receive a `401 Unauthorized:...` or similar from the external clients 
+
+* The service will still start without the environment variables set but you will receive a `401 Unauthorized:...` or
+  similar from the external clients
 
 ### Server local run option #2: IntelliJ
-* Navigate to `src/main/java/com/isaacpit/news/api/NewsApiApplication.java` in Intellij and click the Green Play button and run 
-  * Populate the environment variables mentioned above via "Run Configurations"
+
+* Navigate to `src/main/java/com/isaacpit/news/api/NewsApiApplication.java` in Intellij and click the Green Play button
+  and run
+    * Populate the environment variables mentioned above via "Run Configurations"
 
 ### Unit/Integration Testing
-* I just hit the API manually via postman and local perf test for the most part. I did add groovy/jacoco support as well but only wrote a few unit tests. In practice I would aim for >80% line coverage. Just wanted to set up the boiler plate to use this project as a boiler plate.
+
+* I just hit the API manually via postman and local perf test for the most part. I did add groovy/jacoco support as well
+  but only wrote a few unit tests. In practice I would aim for >80% line coverage. Just wanted to set up the boiler
+  plate to use this project as a boiler plate.
 
 ```shell
 ./mvnw clean verify package
 ```
-  * check `target/site/jacoco.html` for details on the coverage. See the output from the `test` phase to see the Spock tests that ran 
+
+* check `target/site/jacoco.html` for details on the coverage. See the output from the `test` phase to see the Spock
+  tests that ran
 
 # How to run local test client:
+
 * There is a performance test client at `src/test/java/com/isaacpit/news/api/TestClient.groovy`
 
 ```shell
@@ -86,13 +111,16 @@ NEWS_API_KEY="***" GNEWS_API_KEY="***" ./mvnw exec:java -Dexec.mainClass="com.is
 
 ### Sample Requests & Responses
 
-### `GET /search` #1  - Query by keyword in title
-####  *Request*
+### `GET /search` #1 - Query by keyword in title
+
+#### *Request*
+
 ```shell
 http://localhost:8080/news/api/search?query="NBA"&searchIn=title
 ```
 
 #### *Response*
+
 ```json
 {
   "status": "ok",
@@ -134,12 +162,15 @@ http://localhost:8080/news/api/search?query="NBA"&searchIn=title
 ``` 
 
 ### `GET /search` #2 - Query by multiple keywords in title using 'AND' operator
-####  *Request*
+
+#### *Request*
+
 ```shell
 GET http://localhost:8080/news/api/search?query="NBA" AND "Finals"&searchIn=title
 ```
 
 #### *Response*
+
 ```json
 {
   "status": "ok",
@@ -181,12 +212,15 @@ GET http://localhost:8080/news/api/search?query="NBA" AND "Finals"&searchIn=titl
 ``` 
 
 ### `GET /search` #3 - Query by multiple keywords in description or content using 'AND' operator
-####  *Request*
+
+#### *Request*
+
 ```shell
 GET http://localhost:8080/news/api/search?query="NBA" AND "Finals"&searchIn=content,description
 ```
 
 #### *Response*
+
 ```json
 {
   "status": "ok",
@@ -228,12 +262,15 @@ GET http://localhost:8080/news/api/search?query="NBA" AND "Finals"&searchIn=cont
 ``` 
 
 ### `GET /search` #4 - Query by author using first and last name
-####  *Request*
+
+#### *Request*
+
 ```shell
 GET http://localhost:8080/news/api/search?author="Devindra" AND "Hardawar"&searchIn=title,content,description
 ```
 
 #### *Response*
+
 ```json
 {
   "status": "ok",
@@ -275,12 +312,15 @@ GET http://localhost:8080/news/api/search?author="Devindra" AND "Hardawar"&searc
 ``` 
 
 ### `GET /top-headlines` #1 - Query top headlines
-####  *Request*
+
+#### *Request*
+
 ```shell
 GET http://localhost:8080/news/api/top-headlines
 ```
 
 #### *Response*
+
 ```json
 {
   "status": "ok",
@@ -321,13 +361,16 @@ GET http://localhost:8080/news/api/top-headlines
 }
 ```
 
-### `GET /top-headlines` #2 - Query top 2 headlines 
-####  *Request*
+### `GET /top-headlines` #2 - Query top 2 headlines
+
+#### *Request*
+
 ```shell
 GET http://localhost:8080/news/api/top-headlines?pageSize=2
 ```
 
 #### *Response*
+
 ```json
 {
   "status": "ok",
@@ -369,12 +412,15 @@ GET http://localhost:8080/news/api/top-headlines?pageSize=2
 ```
 
 ### `GET /top-headlines` #3 - Query top 2 headlines, second page
-####  *Request*
+
+#### *Request*
+
 ```shell
 GET http://localhost:8080/news/api/top-headlines?pageSize=2&page=2
 ```
 
 #### *Response*
+
 ```json
 {
   "status": "ok",
@@ -416,12 +462,15 @@ GET http://localhost:8080/news/api/top-headlines?pageSize=2&page=2
 ``` 
 
 ### `GET /top-headlines` #4 - Query top with keyword support
-####  *Request*
+
+#### *Request*
+
 ```shell
 GET http://localhost:8080/news/api/top-headlines?query="UFC"
 ```
 
 #### *Response*
+
 ```json
 {
   "status": "ok",
