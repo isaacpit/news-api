@@ -1,0 +1,51 @@
+spring.application.name: news-api
+
+# turn off nag
+spring.groovy.template.check-template-location: false
+
+logging:
+  level:
+#    org.springframework.web: debug
+#    guru.springframework.controllers: debug
+    com.isaacpit.news: info
+
+newsClientConfigs:
+  common-headers:
+    "Content-Type": "application/json"
+  news:
+    protocol: "https"
+    host: "newsapi.org"
+    requestTimeoutDuration: PT5s
+    apikey: "${NEWS_API_KEY}" # passed via header
+    paramNames:
+      pageNumberName: "page"
+      pageSizeName: "pageSize"
+      searchInName: "searchIn"
+    searchApi:
+      apiPath: "/v2/everything"
+      queryParams: {}
+    topHeadlinesApi:
+      apiPath: "/v2/top-headlines"
+      queryParams:
+        "language": "en"
+  gnews:
+    protocol: "https"
+    host: "gnews.io"
+    requestTimeoutDuration: PT5s
+    apikey: null # no option to pass via header, setting explicitly to null for posterity
+    paramNames:
+      pageNumberName: "page"
+      pageSizeName: "max"
+      searchInName: "in"
+    searchApi:
+      apiPath: "/api/v4/search"
+      queryParams:
+        # static query params
+        "apikey": "${GNEWS_API_KEY}" # passing as query param since passing via header is not an option for GNews API
+        "lang": "en"
+        "country": "us"
+    topHeadlinesApi:
+      apiPath: "/api/v4/top-headlines"
+      queryParams:
+        "apikey": "${GNEWS_API_KEY}" # passing as query param since passing via header is not an option for GNews API
+        "country": "us"
