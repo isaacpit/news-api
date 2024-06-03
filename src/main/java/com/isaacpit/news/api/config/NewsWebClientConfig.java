@@ -26,7 +26,7 @@ public class NewsWebClientConfig {
 
     @PostConstruct
     public void init() {
-        log.info("webClientConfigs: {}", toString());
+        log.info("webClientConfigs: {}", this);
     }
 
     @Builder

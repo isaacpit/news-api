@@ -21,7 +21,7 @@ public class TestClient {
     private static final WebClient WEB_CLIENT = WebClient.create();
     private static final RateLimiter RATE_LIMITER = createRateLimiter(5000);
 
-    private static ConcurrentHashMap<String, Long> resultMap = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, Long> resultMap = new ConcurrentHashMap<>();
 
 //    private static final String KEY_SUCCESS = "success";
 //    private static final String KEY_FAILURE = "failure";
@@ -103,7 +103,7 @@ public class TestClient {
                     .retrieve()
                     .bodyToMono(String.class)
                     .block();
-            log.info("Response " + requestNumber + ": responseSize=" + response.toString().length());
+            log.info("Response " + requestNumber + ": responseSize=" + response.length());
             return ResultStatus.SUCCESS;
         } catch (Exception ex) {
             log.error("Error calling API: {}", ex.getMessage());
@@ -113,7 +113,7 @@ public class TestClient {
 
     public enum ResultStatus {
         SUCCESS,
-        FAILURE;
+        FAILURE
     }
 
     public static RateLimiter createRateLimiter(int permitsPerSecond) {
