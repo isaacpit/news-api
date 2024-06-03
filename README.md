@@ -368,7 +368,7 @@ GET http://localhost:8080/news/api/top-headlines?pageSize=2
 }
 ```
 
-### `GET /top-headlines` #2 - Query top 2 headlines, second page
+### `GET /top-headlines` #3 - Query top 2 headlines, second page
 ####  *Request*
 ```shell
 GET http://localhost:8080/news/api/top-headlines?pageSize=2&page=2
@@ -415,7 +415,7 @@ GET http://localhost:8080/news/api/top-headlines?pageSize=2&page=2
 }
 ``` 
 
-### `GET /top-headlines` #3 - Query top with keyword support
+### `GET /top-headlines` #4 - Query top with keyword support
 ####  *Request*
 ```shell
 GET http://localhost:8080/news/api/top-headlines?query="UFC"
