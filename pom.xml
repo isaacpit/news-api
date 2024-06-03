@@ -22,10 +22,12 @@
         <spock-core.version>2.4-M1-groovy-4.0</spock-core.version>
         <groovy-all.version>4.0.16</groovy-all.version>
         <gmavenplus-plugin.version>3.0.2</gmavenplus-plugin.version>
+        <junit4.version>4.8.2</junit4.version>
 
         <lombok.version>1.18.32</lombok.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
 
+        <apache-commons-http.version>4.5.13</apache-commons-http.version>
         <apache-commons-lang3.version>3.12.0</apache-commons-lang3.version>
         <resilience4j.version>2.2.0</resilience4j.version>
     </properties>
@@ -67,7 +69,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.8.2</version>
+            <version>${junit4.version}</version>
         </dependency>
         <!--	Spock	-->
         <dependency>
@@ -94,7 +96,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.5.13</version>
+            <version>${apache-commons-http.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
