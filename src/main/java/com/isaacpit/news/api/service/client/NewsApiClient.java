@@ -1,8 +1,8 @@
 package com.isaacpit.news.api.service.client;
 
-import com.isaacpit.news.api.domain.SearchRequestParams;
+import com.isaacpit.news.api.domain.SearchRequest;
 import com.isaacpit.news.api.domain.NewsResponse;
-import com.isaacpit.news.api.domain.TopHeadlinesRequestParams;
+import com.isaacpit.news.api.domain.TopHeadlinesRequest;
 import com.isaacpit.news.api.dto.NewsResponseDto;
 import com.isaacpit.news.api.mappers.ResponseDtoMapper;
 import com.isaacpit.news.api.service.NewsClient;
@@ -22,14 +22,14 @@ public class NewsApiClient implements NewsClient {
     private final ResponseDtoMapper responseDtoMapper = Mappers.getMapper(ResponseDtoMapper.class);
 
     @Override
-    public NewsResponse callSearchApi(SearchRequestParams searchRequestParams) {
-        NewsResponseDto responseDto = newsApiHttpClient.callSearchApi(searchRequestParams);
+    public NewsResponse callSearchApi(SearchRequest searchRequest) {
+        NewsResponseDto responseDto = newsApiHttpClient.callSearchApi(searchRequest);
 
         return responseDtoMapper.mapNewsResponseToApiResponse(responseDto);
     }
 
     @Override
-    public NewsResponse callTopHeadlinesApi(TopHeadlinesRequestParams requestParams) {
+    public NewsResponse callTopHeadlinesApi(TopHeadlinesRequest requestParams) {
         NewsResponseDto responseDto = newsApiHttpClient.callTopHeadlinesApi(requestParams);
 
         return responseDtoMapper.mapNewsResponseToApiResponse(responseDto);

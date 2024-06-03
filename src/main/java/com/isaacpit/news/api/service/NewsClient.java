@@ -1,12 +1,12 @@
 package com.isaacpit.news.api.service;
 
-import com.isaacpit.news.api.domain.SearchRequestParams;
+import com.isaacpit.news.api.domain.SearchRequest;
 import com.isaacpit.news.api.domain.NewsResponse;
-import com.isaacpit.news.api.domain.TopHeadlinesRequestParams;
+import com.isaacpit.news.api.domain.TopHeadlinesRequest;
 
 public interface NewsClient {
 
-    NewsResponse callSearchApi(SearchRequestParams searchRequestParams);
+    NewsResponse callSearchApi(SearchRequest searchRequest);
 
-    NewsResponse callTopHeadlinesApi(TopHeadlinesRequestParams requestParams);
+    NewsResponse callTopHeadlinesApi(TopHeadlinesRequest requestParams);
 }

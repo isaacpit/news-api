@@ -2,9 +2,9 @@ package com.isaacpit.news.api.service.client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.isaacpit.news.api.domain.SearchRequestParams;
+import com.isaacpit.news.api.domain.SearchRequest;
 import com.isaacpit.news.api.domain.NewsResponse;
-import com.isaacpit.news.api.domain.TopHeadlinesRequestParams;
+import com.isaacpit.news.api.domain.TopHeadlinesRequest;
 import com.isaacpit.news.api.dto.GnewsResponseDto;
 import com.isaacpit.news.api.dto.NewsResponseDto;
 import com.isaacpit.news.api.mappers.ResponseDtoMapper;
@@ -38,7 +38,7 @@ public class MockApiClient implements NewsClient {
      */
     @Override
     @SneakyThrows({JsonProcessingException.class, IOException.class})
-    public NewsResponse callSearchApi(SearchRequestParams searchRequestParams) {
+    public NewsResponse callSearchApi(SearchRequest searchRequest) {
         try (InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(MOCK_SEARCH_RESPONSE_FILEPATH)) {
             GnewsResponseDto responseDto = objectMapper.readValue(inputStream, GnewsResponseDto.class);
             return mapper.mapGnewsResponseToApiResponse(responseDto);
@@ -47,7 +47,7 @@ public class MockApiClient implements NewsClient {
 
     @Override
     @SneakyThrows({JsonProcessingException.class, IOException.class})
-    public NewsResponse callTopHeadlinesApi(TopHeadlinesRequestParams requestParams) {
+    public NewsResponse callTopHeadlinesApi(TopHeadlinesRequest requestParams) {
         try (InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(MOCK_TOP_HEADLINES_RESPONSE_FILEPATH)) {
             NewsResponseDto responseDto = objectMapper.readValue(inputStream, NewsResponseDto.class);
             return mapper.mapNewsResponseToApiResponse(responseDto);
